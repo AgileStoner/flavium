@@ -1,0 +1,17 @@
+{
+    "id": 1,
+    "user": 1,
+    "name": "Meridian Tennis",
+    "address": "населённый пункт Бешкурган, ул. Карвон йули, 92",
+    "district": "YU",
+    "phone": "+998998019966",
+    "price": "15.00",
+    "description": "Meridian Tennis is the perfect destination for tennis enthusiasts! Our state-of-the-art indoor courts are made of hard surface, providing a great playing experience for players of all skill levels. Whether you're a beginner looking to learn the basics or an experienced player looking to sharpen your skills, our on-site coach is available to help. And if you don't have your own racket or balls, don't worry - we provide them for you! After your match, take a shower and freshen up in our well-equipped locker rooms. Book your court today and experience the best in tennis at Meridian Tennis",
+    "opens_at": "06:00",
+    "closes_at": "23:00",
+    "surface": "H",
+    "indoor": true,
+    "lights": true,
+    "court_count": 2,
+    "image": "/Users/asadullakudrateellaev/PycharmProjects/Flavium/media/venues/tenniscourts"
+}
