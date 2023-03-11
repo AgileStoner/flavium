@@ -16,7 +16,8 @@ from knox.models import AuthToken as Token
 STATUS_CHOICES = (
     ('A', 'Accepted'),
     ('R', 'Rejected'),
-    ('C', 'Completed'),
+    ('F', 'Finished'),
+    ('C', 'Cancelled'),
 )
 
 class Booking(models.Model):
@@ -51,7 +52,7 @@ def update_bookings(sender, instance, **kwargs):
     bookings = Booking.objects.filter(user=user, status='A')
     for booking in bookings:
         if booking.end_time < datetime.now().time() and booking.date <= datetime.now().date():
-            booking.status = 'C'
+            booking.status = 'F'
             booking.save()
             # Need to add code to ask user to rate the venue
             

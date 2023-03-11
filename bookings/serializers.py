@@ -54,14 +54,14 @@ class BookingSerializer(serializers.ModelSerializer):
             raise serializers.ValidationError("You can't book a venue more than 30 days in advance!")
         # check that the booking is not more than 16 hours
         if data['hours'] > 16:
-            raise serializers.ValidationError("You can't book a venue for more than 24 hours!")
+            raise serializers.ValidationError("You can't book a venue for more than 16 hours!")
         # check that the booking is not less than 1 hour
         if data['hours'] < 1:
             raise serializers.ValidationError("You can't book a venue for less than 1 hour!")
         # check that the booking is not before the venue opens
         if data['start_time'] < data['venue'].opens_at:
             raise serializers.ValidationError("You can't book a venue before it opens!")
-        # check that the booking is not after the venue closes
+        # check that the booking is not after the venue closess
         if data['start_time'] > data['venue'].closes_at:
             raise serializers.ValidationError("You can't book a venue after it closes!")
         # check that the venue is not already booked for that time taking into account the duration of the booking
