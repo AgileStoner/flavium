@@ -31,7 +31,6 @@ class Venue(models.Model):
     name = models.CharField(max_length=50)
     address = models.CharField(max_length=50)
     district = models.CharField(max_length=2, choices=DISTRICT_CHOICES)
-    phone = models.CharField(max_length=50)
     email = models.EmailField(blank=True,null=True)
     website = models.URLField(blank=True,null=True)
     description = models.TextField()
@@ -70,3 +69,5 @@ class TennisCourt(Venue):
     bookings = GenericRelation(Booking, related_query_name='tenniscourt')
     reviews = GenericRelation(Review, related_query_name='tenniscourt')
     images = GenericRelation(Images, related_query_name='tenniscourt')
+
+

@@ -25,7 +25,6 @@ class TennisCourtListSerializer(serializers.ModelSerializer):
 class TennisCourtSerializer(serializers.ModelSerializer):
     id = serializers.IntegerField(read_only=True)
     user = serializers.HiddenField(default=serializers.CurrentUserDefault())
-    phone = serializers.CharField(max_length=13)
     price = serializers.DecimalField(max_digits=6, decimal_places=2)
     opens_at = serializers.TimeField(format='%H:%M')
     closes_at = serializers.TimeField(format='%H:%M')
@@ -42,7 +41,6 @@ class TennisCourtSerializer(serializers.ModelSerializer):
             'name',
             'address',
             'district',
-            'phone',
             'price',
             'description',
             'opens_at',
