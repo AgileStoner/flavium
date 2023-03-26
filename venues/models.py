@@ -14,7 +14,7 @@ DISTRICT_CHOICES = (
         ('MU', 'Mirzo Ulug\'bek'),
         ('SH', 'Shayxontohur'),
         ('UC', 'Uchtepa'),
-        ('CH', 'Chilonzor'),
+        ('CH', 'Chilonzor'), 
         ('MI', 'Mirobod'),
         ('SE', 'Sergeli'),
         ('YS', 'Yakkasaroy'),
@@ -62,7 +62,6 @@ class TennisCourt(Venue):
     SURFACE_CHOICES = (
         ('H', 'Hard'),
         ('C', 'Clay'),
-        ('G', 'Grass'),
     )
     surface = models.CharField(max_length=1, choices=SURFACE_CHOICES)
     court_count = models.IntegerField(default=1)
