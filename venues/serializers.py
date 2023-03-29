@@ -33,6 +33,7 @@ class TennisCourtSerializer(serializers.ModelSerializer):
     uploaded_images = serializers.ListField(child=serializers.ImageField(), write_only=True, required=False)
     deleted_image_id = serializers.ListField(child=serializers.IntegerField(), write_only=True, required=False)
     public = serializers.BooleanField(default=True)
+    is_favorite = serializers.BooleanField(default=False)
     class Meta:
         model = TennisCourt
         fields = [
@@ -53,6 +54,7 @@ class TennisCourtSerializer(serializers.ModelSerializer):
             'uploaded_images', 
             'deleted_image_id',
             'public',
+            'is_favorite',
         ]
 
     def create(self, validated_data):
@@ -89,4 +91,15 @@ class TennisCourtSerializer(serializers.ModelSerializer):
         else:
             return super().update(instance, validated_data)
         return instance
+    
+    def to_representation(self, instance):
+        data = super().to_representation(instance)
+        # check if user is authenticated
+        if self.context['request'].user.is_authenticated:
+            # check if venue has user in users_liked
+            print(instance.users_liked.all())
+            if self.context['request'].user in instance.users_liked.all():
+                print("user is authenticated")
+                data['is_favorite'] = True
+        return data
     

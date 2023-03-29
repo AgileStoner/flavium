@@ -99,4 +99,3 @@ class SearchListView(generics.GenericAPIView):
                 queryset = queryset.filter(name__icontains=search)
         serializer = self.get_serializer(queryset, many=True)
         return Response(serializer.data)
-    

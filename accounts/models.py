@@ -2,6 +2,9 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser, PermissionsMixin, BaseUserManager
 from django.utils import timezone
 from rest_framework.authtoken.models import Token
+#impodrt generic foreign key
+from django.contrib.contenttypes.fields import GenericForeignKey
+from django.contrib.contenttypes.models import ContentType
 
 
 
@@ -14,9 +17,9 @@ class User(AbstractUser, PermissionsMixin):
     is_venue_owner = models.BooleanField(default=False)
     email = models.EmailField(max_length=255, blank=True, null=True)
 
-
     USERNAME_FIELD = 'phone_number'
     REQUIRED_FIELDS = ['username']
+
 
     def __str__(self):
         return self.username

@@ -44,8 +44,7 @@ class Venue(models.Model):
     #bookings = GenericRelation(Booking, related_query_name='%(app_label)s_%(class)s')
     ratings_count = models.IntegerField(default=0)
     average_rating = models.DecimalField(max_digits=2, decimal_places=1, default=0)
-
-
+    users_liked = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='%(app_label)s_%(class)s_liked', blank=True)
 
 
     def is_public(self) -> bool:
