@@ -20,6 +20,49 @@ class TennisCourtListSerializer(serializers.ModelSerializer):
             'images',
         ]
 
+class TennisCourtCreateSerializer(serializers.ModelSerializer):
+    id = serializers.IntegerField(read_only=True)
+    user = serializers.HiddenField(default=serializers.CurrentUserDefault())
+    price = serializers.DecimalField(max_digits=6, decimal_places=2)
+    opens_at = serializers.TimeField(format='%H:%M')
+    closes_at = serializers.TimeField(format='%H:%M')
+    lights = serializers.BooleanField(default=True)
+    images = ImageSerializer(many=True, read_only=True)
+    uploaded_images = serializers.ListField(child=serializers.ImageField(), write_only=True, required=False)
+    class Meta:
+        model = TennisCourt
+        fields = [
+            'id',
+            'user',
+            'name',
+            'address',
+            'district',
+            'price',
+            'description',
+            'opens_at',
+            'closes_at',
+            'surface',
+            'indoor',
+            'lights',
+            'court_count',
+            'images',
+            'uploaded_images', 
+        ]
+
+    def create(self, validated_data):
+        if 'uploaded_images' in validated_data:
+            uploaded_images = validated_data.pop('uploaded_images')
+            venue = TennisCourt.objects.create(**validated_data)
+            for image in uploaded_images:
+                # check if image already exists
+                if Images.objects.filter(image=image).exists():
+                    raise serializers.ValidationError('Image already exists')
+                else:
+                    Images.objects.create(object=venue, image=image)
+            return venue
+        else:
+            return TennisCourt.objects.create(**validated_data)
+
 
 
 class TennisCourtSerializer(serializers.ModelSerializer):
@@ -56,20 +99,6 @@ class TennisCourtSerializer(serializers.ModelSerializer):
             'public',
             'is_favorite',
         ]
-
-    def create(self, validated_data):
-        if 'uploaded_images' in validated_data:
-            uploaded_images = validated_data.pop('uploaded_images')
-            venue = TennisCourt.objects.create(**validated_data)
-            for image in uploaded_images:
-                # check if image already exists
-                if Images.objects.filter(image=image).exists():
-                    raise serializers.ValidationError('Image already exists')
-                else:
-                    Images.objects.create(object=venue, image=image)
-            return venue
-        else:
-            return TennisCourt.objects.create(**validated_data)
 
     def update(self, instance, validated_data):
         if 'uploaded_images' in validated_data:

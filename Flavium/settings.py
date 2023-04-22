@@ -166,7 +166,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'rest_framework.authentication.BasicAuthentication',
-        'rest_framework.authentication.SessionAuthentication',
+        #'rest_framework.authentication.SessionAuthentication',
         'knox.auth.TokenAuthentication',
         ],
     'DEFAULT_PERMISSION_CLASSES': [
@@ -180,7 +180,7 @@ REST_FRAMEWORK = {
 # knox settings
 REST_KNOX = {
     'USER_SERIALIZER': 'accounts.serializers.UserSerializer',
-    'TOKEN_TTL': timedelta(days=7),
+    'TOKEN_TTL': timedelta(days=300),
     'TOKEN_LIMIT_PER_USER': 200,
 }
 

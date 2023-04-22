@@ -1,5 +1,5 @@
 from rest_framework import generics
-from .serializers import TennisCourtSerializer, TennisCourtListSerializer
+from .serializers import TennisCourtSerializer, TennisCourtListSerializer, TennisCourtCreateSerializer
 from .models import TennisCourt
 from api.mixins import VenueOwnerPermissionMixin
 from rest_framework.parsers import MultiPartParser, FormParser
@@ -29,7 +29,7 @@ class TennisCourtCreateAPIView(
     VenueOwnerPermissionMixin,
     generics.CreateAPIView):
     queryset = TennisCourt.objects.all()
-    serializer_class = TennisCourtSerializer
+    serializer_class = TennisCourtCreateSerializer
     pareser_classes = (MultiPartParser, FormParser)
 
 
