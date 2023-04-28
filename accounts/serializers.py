@@ -5,15 +5,14 @@ from django.contrib.auth import authenticate
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ('id', 'phone_number', 'username', 'password', 'favorite_venues')
+        fields = ('id', 'phone_number', 'username', 'password',)
         extra_kwargs = {'password': {'write_only': True, 'required': True},
                               'id': {'read_only': True}}
     
-    def create(self, validated_data):
-        password = validated_data.pop('password', None)
-        instance = self.Meta.model(**validated_data)
-        if password is not None:
-            instance.set_password(password)
+    def update(self, instance, validated_data):
+        instance.phone_number = validated_data.get('phone_number', instance.phone_number)
+        instance.username = validated_data.get('username', instance.username)
+        instance.password = validated_data.get('password', instance.password)
         instance.save()
         return instance
 

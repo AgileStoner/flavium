@@ -31,6 +31,7 @@ class Booking(models.Model):
     status = models.CharField(max_length=1, choices=STATUS_CHOICES, default='A')
     notes = models.TextField(blank = True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
+    
 
     @property
     def total_price(self):

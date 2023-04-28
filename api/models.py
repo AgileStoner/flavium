@@ -12,4 +12,4 @@ class Images(models.Model):
     object_id = models.PositiveIntegerField(null=True, blank=True)
     object = GenericForeignKey('content_type', 'object_id')
     def __str__(self):
-        return self.image.urls
+        return self.image.url

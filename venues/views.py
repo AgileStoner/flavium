@@ -1,5 +1,5 @@
 from rest_framework import generics
-from .serializers import TennisCourtSerializer, TennisCourtListSerializer, TennisCourtCreateSerializer
+from .serializers import TennisCourtSerializer, TennisCourtListSerializer, TennisCourtCreateSerializer, TennisCourtUpdateSerializer
 from .models import TennisCourt
 from api.mixins import VenueOwnerPermissionMixin
 from rest_framework.parsers import MultiPartParser, FormParser
@@ -8,6 +8,7 @@ from .models import DISTRICT_CHOICES
 from bookings.models import Booking
 from datetime import datetime
 from django.db.models import Count
+from rest_framework.permissions import IsAuthenticated
 
 
 
@@ -54,10 +55,22 @@ class TennisCourtRetrieveUpdateDestroyAPIView(
         return super().perform_destroy(instance)
 
 
+class TennisCourtUpdateAPIView(
+    generics.UpdateAPIView):
+    queryset = TennisCourt.objects.all()
+    serializer_class = TennisCourtUpdateSerializer
+    permission_classes = (IsAuthenticated,)
+
+    def perform_update(self, serializer):
+        serializer.save(user=self.request.user)
+
+
+
+
 
 class SearchListView(generics.GenericAPIView):
     queryset = TennisCourt.objects.all()
-    serializer_class = TennisCourtListSerializer
+    serializer_class = TennisCourtListSerializer 
 
     def get(self, request, *args, **kwargs):
         queryset = self.get_queryset()

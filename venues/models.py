@@ -4,8 +4,7 @@ from bookings.models import Booking
 from django.contrib.contenttypes.fields import GenericRelation
 from reviews.models import Review
 from api.models import Images
-# Create your models here.
-
+from rest_framework.response import Response
 
 DISTRICT_CHOICES = (
         ('OL', 'Olmazor'),
@@ -24,6 +23,14 @@ DISTRICT_CHOICES = (
         ('QB', 'Qibray'),
         ('BO', 'Bo\'stonliq'),
     )
+
+class VenueTrait(models.Model):
+    name = models.CharField(max_length=50)
+    description = models.TextField()
+    image = models.ImageField(upload_to='images/venue_traits', blank=True, null=True)
+
+    def __str__(self):
+        return self.name
 
 
 class Venue(models.Model):
@@ -45,10 +52,14 @@ class Venue(models.Model):
     ratings_count = models.IntegerField(default=0)
     average_rating = models.DecimalField(max_digits=2, decimal_places=1, default=0)
     users_liked = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='%(app_label)s_%(class)s_liked', blank=True)
+    venue_traits = models.ManyToManyField('VenueTrait', related_name='%(app_label)s_%(class)s_venue_traits', blank=True)
 
 
     def is_public(self) -> bool:
         return self.public
+
+    def is_liked(self, user) -> bool:
+        return self.users_liked.filter(id=user.id).exists()
 
     def __str__(self):
         return self.name
